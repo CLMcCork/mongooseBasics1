@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true,
-        min: 0
+        min: [0, 'Price must be POSITIVE!']
     },
     onSale: {
         type: Boolean,
@@ -37,25 +37,17 @@ const productSchema = new mongoose.Schema({
             type: Number,
             default: 0
         }
+    },
+    size: {
+        type: String,
+        enum: ['S', 'M', 'L']
     }
 });
 
 const Product = mongoose.model('Product', productSchema);
 
-// const bike = new Product({ name: 'Tire Pump', price: 19.50, categories: ['Cycling', 'Safety'] })
-// bike.save()
-// .then(data => {
-//     console.log("It worked!!!")
-//     console.log(data)
-// })
-// .catch(err => {
-//     console.log("Oh no! Error!")
-//     console.log(err)
-// })
-
-//if want your updates to have the same constraints (like price must be positive)
-//then need to tell mongoose by setting runValidators: true;
-Product.findOneAndUpdate({ name: 'Tire Pump' }, { price: -19.99 }, {new: true, runValidators: true})
+const bike = new Product({ name: 'Cyling Jersey', price: 30.50, categories: ['Cycling'], size: 'XS' })
+bike.save()
 .then(data => {
     console.log("It worked!!!")
     console.log(data)
@@ -64,3 +56,15 @@ Product.findOneAndUpdate({ name: 'Tire Pump' }, { price: -19.99 }, {new: true, r
     console.log("Oh no! Error!")
     console.log(err)
 })
+
+//if want your updates to have the same constraints (like price must be positive)
+//then need to tell mongoose by setting runValidators: true;
+// Product.findOneAndUpdate({ name: 'Tire Pump' }, { price: -19.99 }, {new: true, runValidators: true})
+// .then(data => {
+//     console.log("It worked!!!")
+//     console.log(data)
+// })
+// .catch(err => {
+//     console.log("Oh no! Error!")
+//     console.log(err)
+// })
