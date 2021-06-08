@@ -42,8 +42,20 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', productSchema);
 
-const bike = new Product({ name: 'Bike Helmets', price: 29.50, categories: ['Cycling', 'Safety'] })
-bike.save()
+// const bike = new Product({ name: 'Tire Pump', price: 19.50, categories: ['Cycling', 'Safety'] })
+// bike.save()
+// .then(data => {
+//     console.log("It worked!!!")
+//     console.log(data)
+// })
+// .catch(err => {
+//     console.log("Oh no! Error!")
+//     console.log(err)
+// })
+
+//if want your updates to have the same constraints (like price must be positive)
+//then need to tell mongoose by setting runValidators: true;
+Product.findOneAndUpdate({ name: 'Tire Pump' }, { price: -19.99 }, {new: true, runValidators: true})
 .then(data => {
     console.log("It worked!!!")
     console.log(data)
