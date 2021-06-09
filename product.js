@@ -44,18 +44,33 @@ const productSchema = new mongoose.Schema({
     }
 });
 
+
+// productSchema.methods.greet = function() {
+//     console.log("Hello!");
+//     console.log(`-from ${this.name}`)  //keyword this refers to this instance 
+// }
+ 
 const Product = mongoose.model('Product', productSchema);
 
-const bike = new Product({ name: 'Cyling Jersey', price: 30.50, categories: ['Cycling'], size: 'XS' })
-bike.save()
-.then(data => {
-    console.log("It worked!!!")
-    console.log(data)
-})
-.catch(err => {
-    console.log("Oh no! Error!")
-    console.log(err)
-})
+
+const findProduct = async () => {
+    const foundProduct = await Product.findOne({name: 'Bike Helmet'});
+    foundProduct.greet(); 
+}
+
+findProduct(); 
+
+
+// const bike = new Product({ name: 'Cyling Jersey', price: 30.50, categories: ['Cycling'], size: 'XS' })
+// bike.save()
+// .then(data => {
+//     console.log("It worked!!!")
+//     console.log(data)
+// })
+// .catch(err => {
+//     console.log("Oh no! Error!")
+//     console.log(err)
+// })
 
 //if want your updates to have the same constraints (like price must be positive)
 //then need to tell mongoose by setting runValidators: true;
