@@ -49,13 +49,29 @@ const productSchema = new mongoose.Schema({
 //     console.log("Hello!");
 //     console.log(`-from ${this.name}`)  //keyword this refers to this instance 
 // }
- 
+
+//make a method to be able to toggle products on/off sale 
+productSchema.methods.toggleOnSale = function() {
+    this.onSale = !this.onSale; //this takes this.onSale and makes it = to the opposite
+    return this.save();
+}
+
+//add category 
+productSchema.methods.addCategory = function(newCat) {
+    this.categories.push(newCat);
+    return this.save();
+}
 const Product = mongoose.model('Product', productSchema);
 
 
 const findProduct = async () => {
     const foundProduct = await Product.findOne({name: 'Bike Helmet'});
-    foundProduct.greet(); 
+    // foundProduct.greet(); 
+    console.log(foundProduct);
+    await foundProduct.toggleOnSale();
+    console.log(foundProduct);
+    await foundProduct.addCategory('Outdoors')
+    console.log(foundProduct);
 }
 
 findProduct(); 
