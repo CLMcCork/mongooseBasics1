@@ -9,3 +9,18 @@ mongoose.connect('mongodb://localhost:27017/shopApp', {useNewUrlParser: true, us
     console.log("Oh no! An error has occurred!")
     console.log(err)
 })
+
+//schema 
+const personSchema = new mongoose.Schema({
+    first: String,
+    last: String
+})
+
+
+personSchema.virtual('fullName').get(function () {
+    return `${this.first} ${this.last}`
+})
+
+
+//person model 
+const Person = mongoose.model('Person', personSchema);
