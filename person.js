@@ -22,5 +22,19 @@ personSchema.virtual('fullName').get(function () {
 })
 
 
+//mongoose middleware functions 
+//this runs pre saved 
+personSchema.pre('save', async function() {
+    this.first = 'Yoooooooo';
+    this.last = 'Mama';
+    console.log("About to save!!!!")
+})
+
+//mongoose middleware 
+//this runs post saved 
+personSchema.post('save', async function() {
+    console.log("JUST SAVED!!!!")
+})
+
 //person model 
 const Person = mongoose.model('Person', personSchema);
