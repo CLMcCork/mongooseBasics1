@@ -56,11 +56,17 @@ productSchema.methods.toggleOnSale = function() {
     return this.save();
 }
 
-//add category 
+//add category using instance methods 
 productSchema.methods.addCategory = function(newCat) {
     this.categories.push(newCat);
     return this.save();
 }
+
+//fireSale using static methods
+productSchema.statics.fireSale = function () {
+    return this.updateMany({}, {onSale: true, price: 0 })
+}
+
 const Product = mongoose.model('Product', productSchema);
 
 
@@ -74,7 +80,10 @@ const findProduct = async () => {
     console.log(foundProduct);
 }
 
-findProduct(); 
+//static method 
+Product.fireSale().then(res => console.log(res))
+
+// findProduct(); 
 
 
 // const bike = new Product({ name: 'Cyling Jersey', price: 30.50, categories: ['Cycling'], size: 'XS' })
